@@ -584,5 +584,34 @@
         // Initialize - show message
         noResults.style.display = 'block';
     </script>
+    
+    <script>
+        // Auto-resize iframe - sends height to parent window
+        (function() {
+            function sendHeight() {
+                var height = document.documentElement.scrollHeight;
+                window.parent.postMessage({
+                    type: 'ce-tool-resize',
+                    height: height
+                }, '*');
+            }
+            
+            // Send initial height
+            setTimeout(sendHeight, 100);
+            
+            // Send height when content changes
+            window.addEventListener('resize', sendHeight);
+            
+            // Watch for table visibility changes
+            var tableContainer = document.getElementById('tableContainer');
+            if (tableContainer) {
+                var observer = new MutationObserver(sendHeight);
+                observer.observe(tableContainer, {
+                    attributes: true,
+                    attributeFilter: ['class']
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
