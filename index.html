@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Massage Therapy CE Requirements by State</title>
+    
+    <!--
+    ============================================================================
+    COPYRIGHT NOTICE - ALL RIGHTS RESERVED
+    ============================================================================
+    
+    © 2026 Tania Velásquez | Pinpoint Education
+    
+    This work is protected by copyright law. All rights reserved.
+    
+    UNAUTHORIZED USE PROHIBITED:
+    - No copying, redistribution, or reproduction without written permission
+    - No derivative works without written permission
+    - No commercial use without written permission
+    
+    For licensing inquiries, contact: https://pinpointeducation.com
+    
+    ============================================================================
+    -->
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .ce-lookup-container {
+            font-family: 'Open Sans', sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8fbfd 0%, #ffffff 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,98,159,0.08);
+        }
+        
+        .ce-header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 3px solid #00629F;
+        }
+        
+        .ce-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #041F37;
+            margin: 0 0 12px 0;
+            letter-spacing: -0.5px;
+        }
+        
+        .ce-header p {
+            font-size: 16px;
+            color: #464646;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 32px auto;
+        }
+        
+        .search-box {
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,98,159,0.12);
+            border: 2px solid #00629F;
+        }
+        
+        #stateSearch {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+            color: #041F37;
+        }
+        
+        .clear-btn {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #00629F;
+            cursor: pointer;
+            padding: 4px 8px;
+            line-height: 1;
+            display: none;
+        }
+        
+        .clear-btn.visible {
+            display: block;
+        }
+        
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,98,159,0.15);
+            margin-top: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            border: 1px solid #00629F;
+            display: none;
+        }
+        
+        .dropdown.visible {
+            display: block;
+        }
+        
+        .dropdown-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            color: #041F37;
+        }
+        
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-item:hover {
+            background: #f8fbfd;
+        }
+        
+        .no-results {
+            padding: 40px 20px;
+            text-align: center;
+            color: #999;
+            font-style: italic;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,98,159,0.08);
+            display: none;
+        }
+        
+        .table-container.visible {
+            display: block;
+        }
+        
+        .ce-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        .ce-table thead tr {
+            background: linear-gradient(135deg, #00629F 0%, #041F37 100%);
+            color: white;
+        }
+        
+        .ce-table th {
+            padding: 16px 12px;
+            text-align: left;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            line-height: 1.4;
+        }
+        
+        .ce-table th:last-child {
+            border-right: none;
+        }
+        
+        .ce-table tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .ce-table td {
+            padding: 20px 12px;
+            color: #464646;
+            vertical-align: top;
+            line-height: 1.6;
+        }
+        
+        .ce-table td:first-child {
+            font-weight: 700;
+            color: #00629F;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+        }
+        
+        .ce-table td:nth-child(3),
+        .ce-table td:nth-child(4) {
+            font-weight: 600;
+        }
+        
+        .ce-table td:nth-child(5) {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        .board-link {
+            color: #00629F;
+            text-decoration: underline;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .board-link:hover {
+            color: #FF9219;
+            text-decoration: underline;
+        }
+        
+        .no-board {
+            color: #999;
+            font-size: 13px;
+        }
+        
+        .ce-footer {
+            margin-top: 32px;
+            padding: 24px;
+            background: white;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 13px;
+            color: #464646;
+            border-top: 3px solid #FFC83B;
+        }
+        
+        .ce-footer p {
+            margin: 0 0 8px 0;
+        }
+        
+        .ce-footer p:last-child {
+            margin: 8px 0 0 0;
+            color: #00629F;
+            font-size: 12px;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #00629F;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #041F37;
+        }
+        
+        @media (max-width: 768px) {
+            .ce-header h1 {
+                font-size: 24px;
+            }
+            
+            .ce-table {
+                font-size: 12px;
+            }
+            
+            .ce-table th,
+            .ce-table td {
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ce-lookup-container">
+        <!-- Header -->
+        <div class="ce-header">
+            <h1>US Massage Therapy CE Requirements by State</h1>
+            <p>Updated for 2026 — Find your state's continuing education requirements</p>
+        </div>
+        
+        <!-- Search Box -->
+        <div class="search-container">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="stateSearch" 
+                    placeholder="Search for a US state or territory..."
+                    autocomplete="off"
+                >
+                <button class="clear-btn" id="clearBtn" aria-label="Clear search">×</button>
+            </div>
+            <div class="dropdown" id="dropdown"></div>
+        </div>
+        
+        <!-- Table (only shows when state selected) -->
+        <div class="table-container" id="tableContainer">
+            <table class="ce-table">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">US State/Territory</th>
+                        <th style="width: 12%;">Approval Body<br><span style="font-size: 10px; font-weight: 400; text-transform: none;">(NCBTMB, FSMTB, or Other)</span></th>
+                        <th style="width: 11%;">Total CE Required</th>
+                        <th style="width: 10%;">Max Online CE Allowed</th>
+                        <th style="width: 25%;">Notes & Mandatory Subjects</th>
+                        <th style="width: 16%;">State Board Website</th>
+                        <th style="width: 16%;">Official CE Requirements Page</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults" style="display: none;">
+            Please search for a state or territory above to view CE requirements.
+        </div>
+        
+        <!-- Footer -->
+        <div class="ce-footer">
+            <p><strong>Note:</strong> Requirements are subject to change. Always verify with your state board before completing CE credits.</p>
+            <p>© 2026 Tania Velásquez | Pinpoint Education • Data compiled from official state licensing boards</p>
+        </div>
+    </div>
+    
+    <script>
+        // State abbreviations mapping
+        const stateAbbreviations = {
+            'AL': 'Alabama', 'AK': 'Alaska', 'AS': 'American Samoa', 'AZ': 'Arizona', 'AR': 'Arkansas',
+            'CA': 'California', 'CO': 'Colorado', 'CT': 'Connecticut', 'DE': 'Delaware', 'DC': 'District of Columbia',
+            'FL': 'Florida', 'GA': 'Georgia', 'GU': 'Guam', 'HI': 'Hawaii', 'ID': 'Idaho',
+            'IL': 'Illinois', 'IN': 'Indiana', 'IA': 'Iowa', 'KS': 'Kansas', 'KY': 'Kentucky',
+            'LA': 'Louisiana', 'ME': 'Maine', 'MD': 'Maryland', 'MA': 'Massachusetts', 'MI': 'Michigan',
+            'MN': 'Minnesota', 'MS': 'Mississippi', 'MO': 'Missouri', 'MT': 'Montana', 'NE': 'Nebraska',
+            'NV': 'Nevada', 'NH': 'New Hampshire', 'NJ': 'New Jersey', 'NM': 'New Mexico', 'NY': 'New York',
+            'NC': 'North Carolina', 'ND': 'North Dakota', 'MP': 'Northern Mariana Islands', 'OH': 'Ohio',
+            'OK': 'Oklahoma', 'OR': 'Oregon', 'PA': 'Pennsylvania', 'PR': 'Puerto Rico', 'RI': 'Rhode Island',
+            'SC': 'South Carolina', 'SD': 'South Dakota', 'TN': 'Tennessee', 'TX': 'Texas', 'VI': 'U.S. Virgin Islands',
+            'UT': 'Utah', 'VT': 'Vermont', 'VA': 'Virginia', 'WA': 'Washington', 'WV': 'West Virginia',
+            'WI': 'Wisconsin', 'WY': 'Wyoming'
+        };
+        
+        // State data with updated URLs
+        const stateData = [
+            { state: "Alabama", ncbtmbFsmtb: "Both", totalCE: "16 hrs / 2 yrs", maxOnline: "8 hrs", notes: "New June 2026: 8 mandatory contact hours must be board-developed/approved (Law, Trafficking, Discipline).", boardName: "Alabama Massage Therapy Licensing Board", boardUrl: "https://amtlb.alabama.gov/", ceUrl: "https://amtlb.alabama.gov/education/continuing-education/" },
+            { state: "Alaska", ncbtmbFsmtb: "Both", totalCE: "16 hrs / 2 yrs", maxOnline: "16 hrs", notes: "All 16 can be online; includes 2 hrs Ethics.", boardName: "Alaska Board of Massage Therapists", boardUrl: "https://www.commerce.alaska.gov/web/cbpl/ProfessionalLicensing/BoardofMassageTherapists", ceUrl: "https://www.commerce.alaska.gov/web/cbpl/ProfessionalLicensing/BoardofMassageTherapists/ContinuingEducation.aspx" },
+            { state: "American Samoa", ncbtmbFsmtb: "TBD", totalCE: "TBD", maxOnline: "TBD", notes: "Local ordinances apply; no centralized board data.", boardName: "No board found / Not clearly regulated", boardUrl: "", ceUrl: "" },
+            { state: "Arizona", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "12 hrs", notes: "Max 12 hrs distance learning.", boardName: "Arizona State Board of Massage Therapy", boardUrl: "602-542-8604", ceUrl: "602-542-8604" },
+            { state: "Arkansas", ncbtmbFsmtb: "Both", totalCE: "18 hrs / 2 yrs", maxOnline: "6 hrs", notes: "Max 6 hrs online/home study.", boardName: "Arkansas Department of Health – Massage Therapy Section", boardUrl: "501-683-1448", ceUrl: "501-683-1448" },
+            { state: "California", ncbtmbFsmtb: "Unregulated by state. Voluntary CE (CAMTC)", totalCE: "N/A", maxOnline: "N/A", notes: "CAMTC certification is voluntary; no state CE requirement.", boardName: "California Massage Therapy Council (state-authorized nonprofit)", boardUrl: "https://www.camtc.org/", ceUrl: "916-669-5336" },
+            { state: "Colorado", ncbtmbFsmtb: "Colorado does not mandate CE for license renewal (optional)", totalCE: "No statewide CE requirement", maxOnline: "N/A", notes: "Spas, clinics, and hospitals may require CE hours internally.", boardName: "Colorado Division of Professions & Occupations", boardUrl: "https://dpo.colorado.gov/MassageTherapy", ceUrl: "https://dpo.colorado.gov/MassageTherapy/Laws" },
+            { state: "Connecticut", ncbtmbFsmtb: "NCBTMB", totalCE: "24 hrs / 4 yrs", maxOnline: "18 hrs", notes: "Max 18 hrs online/distance.", boardName: "Connecticut Department of Public Health", boardUrl: "https://portal.ct.gov/DPH/Practitioner-Licensing--Investigations/Massagetherapist", ceUrl: "https://portal.ct.gov/dph/practitioner-licensing--investigations/massagetherapist/massage-therapist-continuing-education-requirements" },
+            { state: "Delaware", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "15 hrs", notes: "9 hrs Core must be in-person; 3 Ethics + 12 Elective can be online.", boardName: "Delaware Board of Massage and Bodywork", boardUrl: "https://dpr.delaware.gov/boards/massagebodyworks/", ceUrl: "https://dpr.delaware.gov/boards/massagebodyworks/continuing-education-and-audit-information/" },
+            { state: "District of Columbia", ncbtmbFsmtb: "Both", totalCE: "14 hrs / 2 yrs", maxOnline: "8 hrs", notes: "Min 6 hrs hands-on live classroom.", boardName: "DC Board of Massage Therapy", boardUrl: "https://dchealth.dc.gov/", ceUrl: "https://dchealth.dc.gov/" },
+            { state: "Florida", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "12 hrs = 7 mandatory + 5 general elective", notes: "12 Technique hours must be in-person. 7 Mandatory Hrs = 2 Hours: Florida Laws & Rules, 2 Hours: Professional Ethics, 2 Hours: Prevention of Medical Errors, 1 Hour: Human Trafficking Awareness. 5 Hours: General Electives.", boardName: "Florida Board of Massage Therapy", boardUrl: "https://floridasmassagetherapy.gov/", ceUrl: "https://floridasmassagetherapy.gov/licensed-massage-therapist/" },
+            { state: "Georgia", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "12 hrs", notes: "Min 12 hrs direct hands-on supervised instruction.", boardName: "Georgia Board of Massage Therapy", boardUrl: "https://sos.ga.gov/georgia-board-massage-therapy", ceUrl: "https://sos.ga.gov/page/georgia-board-massage-therapy-continuing-education" },
+            { state: "Guam", ncbtmbFsmtb: "TBD", totalCE: "TBD", maxOnline: "TBD", notes: "Allied Health Board regulation; contact for current 2026 limits.", boardName: "Guam Board of Allied Health Examiners", boardUrl: "https://dphss.guam.gov/", ceUrl: "" },
+            { state: "Hawaii", ncbtmbFsmtb: "Board Approved", totalCE: "12 hrs / 2 yrs", maxOnline: "10 hrs", notes: "2 hrs First Aid/CPR must be hands-on.", boardName: "Hawaii Board of Massage Therapy", boardUrl: "https://cca.hawaii.gov/pvl/boards/massage/", ceUrl: "https://cca.hawaii.gov/pvl/files/2024/05/Massage-CE-guidance-document-final-5.17.24-3rd-Amended.pdf" },
+            { state: "Idaho", ncbtmbFsmtb: "Both", totalCE: "6 hrs / 1 yr", maxOnline: "6 hrs", notes: "Transitioning to 2-year cycle; 1 hr Ethics required.", boardName: "Idaho Board of Massage Therapy", boardUrl: "https://dopl.idaho.gov/mas/", ceUrl: "208-334-3233" },
+            { state: "Illinois", ncbtmbFsmtb: "Both", totalCE: "25 hrs / 2 yrs", maxOnline: "25 hrs", notes: "New for 2026: 1 hr Domestic Violence required. All 25 hrs can be online.", boardName: "Illinois Department of Financial & Professional Regulation", boardUrl: "https://idfpr.illinois.gov/profs/massagetherapy.html", ceUrl: "https://idfpr.illinois.gov/content/dam/soi/en/web/idfpr/core/dpr/227-qualifications-for-licensure.pdf" },
+            { state: "Indiana", ncbtmbFsmtb: "NCBTMB", totalCE: "24 hrs / 4 yrs", maxOnline: "24 hrs", notes: "All can be online; includes 2 hrs Ethics.", boardName: "Indiana Professional Licensing Agency", boardUrl: "https://www.in.gov/pla/professions/massage-therapy-home/", ceUrl: "https://www.in.gov/pla/professions/massage-therapy-home/massage-therapy-licensing-information/" },
+            { state: "Iowa", ncbtmbFsmtb: "Both", totalCE: "16 hrs / 2 yrs", maxOnline: "8 hrs", notes: "Min 8 hrs in-person or live interactive.", boardName: "Iowa Board of Massage Therapy", boardUrl: "https://dial.iowa.gov/licenses/health-professions/massage-therapy", ceUrl: "https://www.legis.iowa.gov/docs/iac/chapter/481.823.pdf" },
+            { state: "Kansas", ncbtmbFsmtb: "Unregulated state", totalCE: "No statewide CE requirement", maxOnline: "N/A", notes: "N/A", boardName: "Not regulated at state level", boardUrl: "", ceUrl: "" },
+            { state: "Kentucky", ncbtmbFsmtb: "Both", totalCE: "12 hrs / 2 yrs", maxOnline: "12 hrs", notes: "All can be online; includes 3 hrs Ethics.", boardName: "Kentucky Board of Licensure for Massage Therapy", boardUrl: "https://bmt.ky.gov/", ceUrl: "https://bmt.ky.gov/new_Docs.aspx?cat=210" },
+            { state: "Louisiana", ncbtmbFsmtb: "NCBTMB", totalCE: "12 hrs / 1 yr", maxOnline: "12 hrs", notes: "All can be online from approved providers.", boardName: "Louisiana Board of Massage Therapy", boardUrl: "https://www.labmt.org/", ceUrl: "https://www.labmt.org/become-or-manage-providership/" },
+            { state: "Maine", ncbtmbFsmtb: "No CE requirement", totalCE: "N/A", maxOnline: "N/A", notes: "N/A", boardName: "Maine Office of Professional & Occupational Regulation", boardUrl: "https://www.maine.gov/pfr/professionallicensing/professions/massage-therapy-licensure", ceUrl: "207-624-8624" },
+            { state: "Maryland", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "24 hrs", notes: "All can be online; includes 3 Ethics, 3 HIV, 2 Diversity.", boardName: "Maryland Board of Massage Therapy Examiners", boardUrl: "https://health.maryland.gov/massage/Pages/home.aspx", ceUrl: "https://health.maryland.gov/massage/pages/education.aspx" },
+            { state: "Massachusetts", ncbtmbFsmtb: "No CE requirement (legislation pending)", totalCE: "N/A", maxOnline: "N/A", notes: "N/A", boardName: "Massachusetts Board of Registration of Massage Therapy", boardUrl: "617-701-8630", ceUrl: "617-701-8630" },
+            { state: "Michigan", ncbtmbFsmtb: "Both", totalCE: "18 hrs / 3 yrs", maxOnline: "18 hrs", notes: "All can be online; includes 2 Ethics, 1 Pain Management.", boardName: "Michigan Board of Massage Therapy", boardUrl: "https://www.michigan.gov/lara/bureau-list/bpl/health/hp-lic-health-prof/massage", ceUrl: "517-241-0199" },
+            { state: "Minnesota", ncbtmbFsmtb: "Unregulated by state. Regulated at city/county level only", totalCE: "N/A", maxOnline: "N/A", notes: "Check to see if a local license, permit, or registration is required.", boardName: "Not regulated at state level", boardUrl: "", ceUrl: "" },
+            { state: "Mississippi", ncbtmbFsmtb: "Both", totalCE: "12 hrs / 1 yr", maxOnline: "5 hrs", notes: "Only 5 hrs per year can be online.", boardName: "Mississippi State Board of Massage Therapy", boardUrl: "https://www.msbmt.ms.gov/", ceUrl: "https://www.msbmt.ms.gov/continuing-education" },
+            { state: "Missouri", ncbtmbFsmtb: "Both", totalCE: "12 hrs / 2 yrs", maxOnline: "12 hrs", notes: "All can be online.", boardName: "Missouri Board of Therapeutic Massage", boardUrl: "https://boards.mo.gov/userpages/Board.aspx?10", ceUrl: "https://s1.sos.mo.gov/cmsimages/adrules/csr/current/20csr/20c2197-2.pdf" },
+            { state: "Montana", ncbtmbFsmtb: "Both", totalCE: "12 hrs / 2 yrs", maxOnline: "12 hrs", notes: "All can be online; includes 2 hrs Ethics.", boardName: "Montana Board of Massage Therapy", boardUrl: "https://boards.bsd.dli.mt.gov/massage-therapy/", ceUrl: "https://boards.bsd.dli.mt.gov/massage-therapy/continuing-education/" },
+            { state: "Nebraska", ncbtmbFsmtb: "Both", totalCE: "16 hrs / 2 yrs", maxOnline: "8 hrs", notes: "Min 8 hrs hands-on workshops.", boardName: "Nebraska Board of Massage Therapy", boardUrl: "https://dhhs.ne.gov/licensure/pages/massage-therapy.aspx", ceUrl: "https://dhhs.ne.gov/licensure/pages/massage-therapy-continuing-education.aspx" },
+            { state: "Nevada", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "24 hrs", notes: "All can be online; includes 2 hrs Ethics.", boardName: "Nevada State Board of Massage Therapy", boardUrl: "https://massagetherapy.nv.gov/", ceUrl: "https://massagetherapy.nv.gov/Licensing/ContinuingEducation/" },
+            { state: "New Hampshire", ncbtmbFsmtb: "Both", totalCE: "12 hrs / 2 yrs", maxOnline: "12 hrs", notes: "All online allowed; max 3 hrs Business.", boardName: "NH Office of Professional Licensure", boardUrl: "https://www.oplc.nh.gov/massage-therapy", ceUrl: "https://www.oplc.nh.gov/massage-therapy/continuing-education" },
+            { state: "New Jersey", ncbtmbFsmtb: "Both", totalCE: "20 hrs / 2 yrs", maxOnline: "6 hrs", notes: "Max 6 hrs online; includes 2 Ethics, 1 Law.", boardName: "NJ Board of Massage and Bodywork Therapy", boardUrl: "https://www.njconsumeraffairs.gov/mbbt", ceUrl: "https://www.njconsumeraffairs.gov/mbbt/Pages/continuing-education.aspx" },
+            { state: "New Mexico", ncbtmbFsmtb: "Both", totalCE: "16 hrs / 2 yrs", maxOnline: "16 hrs", notes: "All can be online.", boardName: "New Mexico Massage Therapy Board", boardUrl: "https://www.rld.nm.gov/boards-and-commissions/individual-boards-and-commissions/massage-therapy/", ceUrl: "https://www.rld.nm.gov/boards-and-commissions/individual-boards-and-commissions/massage-therapy/continuing-education/" },
+            { state: "New York", ncbtmbFsmtb: "NCBTMB (NYS approved only)", totalCE: "36 hrs / 3 yrs", maxOnline: "36 hrs", notes: "All can be online from NYS-approved sponsors.", boardName: "NY State Education Department – Office of the Professions", boardUrl: "https://www.op.nysed.gov/professions/massage-therapy", ceUrl: "https://www.op.nysed.gov/professions/massage-therapy/continuing-education" },
+            { state: "North Carolina", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "12 hrs", notes: "Max 12 hrs distance learning.", boardName: "North Carolina Board of Massage and Bodywork Therapy", boardUrl: "https://www.bmbt.org/", ceUrl: "https://www.bmbt.org/licensure/continuing-education" },
+            { state: "North Dakota", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "10 hrs", notes: "Max 10 hrs online.", boardName: "North Dakota Board of Massage Therapy", boardUrl: "https://www.ndbmt.org/", ceUrl: "https://www.ndbmt.org/cerequirements.asp" },
+            { state: "Northern Mariana Islands", ncbtmbFsmtb: "TBD", totalCE: "TBD", maxOnline: "TBD", notes: "Local licensing board oversight.", boardName: "CNMI Health Care Professions Licensing Board", boardUrl: "https://www.cnmilicensing.gov.mp/health-care-professions-licensing-board/", ceUrl: "670-664-4809" },
+            { state: "Ohio", ncbtmbFsmtb: "No CE requirement", totalCE: "N/A", maxOnline: "N/A", notes: "N/A", boardName: "State Medical Board of Ohio", boardUrl: "https://med.ohio.gov/", ceUrl: "https://med.ohio.gov/License-Look-Up/Massage-Therapy" },
+            { state: "Oklahoma", ncbtmbFsmtb: "Both", totalCE: "10 hrs / 2 yrs", maxOnline: "10 hrs", notes: "All can be online.", boardName: "Oklahoma State Board of Cosmetology & Barbering", boardUrl: "https://oklahoma.gov/cosmo.html", ceUrl: "https://oklahoma.gov/cosmo/licenses/massage.html" },
+            { state: "Oregon", ncbtmbFsmtb: "Both", totalCE: "25 hrs / 2 yrs", maxOnline: "17 hrs", notes: "Min 8 hrs supervised/in-person.", boardName: "Oregon Board of Massage Therapists", boardUrl: "https://www.oregon.gov/obmt", ceUrl: "https://www.oregon.gov/obmt/pages/continuing-education.aspx" },
+            { state: "Pennsylvania", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "8 hrs", notes: "Max 8 hrs online; min 16 hrs in-person.", boardName: "Pennsylvania State Board of Massage Therapy", boardUrl: "https://www.dos.pa.gov/ProfessionalLicensing/BoardsCommissions/MassageTherapy", ceUrl: "https://www.dos.pa.gov/ProfessionalLicensing/BoardsCommissions/MassageTherapy/Pages/Continuing-Education.aspx" },
+            { state: "Puerto Rico", ncbtmbFsmtb: "TBD (contact board)", totalCE: "6 hrs / 3 yrs", maxOnline: "TBD", notes: "Minimum education is high (1000 hrs); low CE requirement.", boardName: "Puerto Rico Dept. of Health – Massage Therapy Board", boardUrl: "https://www.salud.pr.gov/CMS/487", ceUrl: "787-765-2929" },
+            { state: "Rhode Island", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "24 hrs", notes: "New for 2026: Increased from 6 hrs to 24 hrs. All can be online.", boardName: "Rhode Island Department of Health – Massage Therapy", boardUrl: "https://health.ri.gov/licensing/massage-therapy", ceUrl: "https://health.ri.gov/licensing/massage-therapy" },
+            { state: "South Carolina", ncbtmbFsmtb: "Both", totalCE: "12 hrs / 2 yrs", maxOnline: "12 hrs", notes: "All online allowed.", boardName: "South Carolina Board of Massage/Bodywork Therapy", boardUrl: "https://llr.sc.gov/mas/", ceUrl: "https://llr.sc.gov/mas/ce.aspx" },
+            { state: "South Dakota", ncbtmbFsmtb: "Both", totalCE: "8 hrs / 2 yrs", maxOnline: "8 hrs", notes: "All online allowed.", boardName: "South Dakota Board of Massage Therapy", boardUrl: "https://doh.sd.gov/boards/massage/", ceUrl: "https://doh.sd.gov/boards/massage/continuing-education/" },
+            { state: "Tennessee", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "8 hrs", notes: "Max 8 hrs multimedia (online).", boardName: "Tennessee Board of Massage Licensure", boardUrl: "https://www.tn.gov/health/health-program-areas/health-professional-boards/ml-board.html", ceUrl: "https://www.tn.gov/health/health-program-areas/health-professional-boards/ml-board/ml-board/continuing-education.html" },
+            { state: "Texas", ncbtmbFsmtb: "NCBTMB", totalCE: "12 hrs / 2 yrs", maxOnline: "Cognitive", notes: "\"Cognitive\" (Ethics, Law) can be online; Techniques must be in-person.", boardName: "Texas Department of Licensing and Regulation", boardUrl: "https://www.tdlr.texas.gov/mas/", ceUrl: "https://www.tdlr.texas.gov/mas/education.htm" },
+            { state: "U.S. Virgin Islands", ncbtmbFsmtb: "TBD (contact board)", totalCE: "15 hrs / 1 yr", maxOnline: "TBD", notes: "Annual license; contact board for current online limits.", boardName: "VI Dept. of Health – Office of Professional Licensure and Health Planning", boardUrl: "https://doh.vi.gov/office-of-professional-licensure-and-health-planning/", ceUrl: "https://doh.vi.gov/wp-content/uploads/2024/03/Massage-Therapy-Requirements-2023.pdf" },
+            { state: "Utah", ncbtmbFsmtb: "No CE requirement", totalCE: "N/A", maxOnline: "N/A", notes: "N/A", boardName: "Utah Division of Professional Licensing", boardUrl: "https://dopl.utah.gov/massage/", ceUrl: "https://dopl.utah.gov/massage/continuing-education.html" },
+            { state: "Vermont", ncbtmbFsmtb: "No CE requirement", totalCE: "N/A", maxOnline: "N/A", notes: "N/A", boardName: "Vermont Office of Professional Regulation", boardUrl: "https://sos.vermont.gov/massage-therapists-bodyworkers-and-touch-professionals/", ceUrl: "802-828-1505" },
+            { state: "Virginia", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "24 hrs", notes: "All online allowed; includes 1 hr Ethics.", boardName: "Virginia Board of Nursing", boardUrl: "https://www.dhp.virginia.gov/nursing/", ceUrl: "https://www.dhp.virginia.gov/nursing/nursing_forms.htm" },
+            { state: "Washington", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "16 hrs", notes: "Min 8 hrs directly supervised/in-person.", boardName: "Washington State Department of Health", boardUrl: "https://doh.wa.gov/licenses-permits-and-certificates/professions-new-renew-or-update/massage-therapist", ceUrl: "https://doh.wa.gov/licenses-permits-and-certificates/professions-new-renew-or-update/massage-therapist/renewal" },
+            { state: "West Virginia", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "24 hrs", notes: "All online allowed; includes 3 hrs Ethics.", boardName: "West Virginia Massage Therapy Licensure Board", boardUrl: "https://www.wv.gov/pages/agency.aspx?newid=296", ceUrl: "http://www.wvmassage.org/ce.asp" },
+            { state: "Wisconsin", ncbtmbFsmtb: "Both", totalCE: "24 hrs / 2 yrs", maxOnline: "24 hrs", notes: "All online allowed; includes 2 hrs Ethics.", boardName: "Wisconsin Massage Therapy and Bodywork Therapy Board", boardUrl: "https://dsps.wi.gov/pages/BoardsCouncils/MassageTherapy/Default.aspx", ceUrl: "https://dsps.wi.gov/Pages/Professions/MassageTherapy/CE.aspx" },
+            { state: "Wyoming", ncbtmbFsmtb: "Unregulated state", totalCE: "No statewide CE requirement", maxOnline: "N/A", notes: "Cities or counties may impose their own requirements. Check local ordinances. Legislature passed SF0091 in 2022 regarding massage therapy regulation.", boardName: "Wyoming Legislature – Massage Therapy Regulation", boardUrl: "https://wyoleg.gov/Legislation/2022/SF0091", ceUrl: "N/A" }
+        ];
+        
+        // DOM elements
+        const searchInput = document.getElementById('stateSearch');
+        const clearBtn = document.getElementById('clearBtn');
+        const dropdown = document.getElementById('dropdown');
+        const tableContainer = document.getElementById('tableContainer');
+        const tableBody = document.getElementById('tableBody');
+        const noResults = document.getElementById('noResults');
+        
+        let selectedState = null;
+        
+        // Render selected state only
+        function renderState(state) {
+            if (!state) {
+                tableContainer.classList.remove('visible');
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            tableContainer.classList.add('visible');
+            
+            // Board website link or phone
+            let boardLink;
+            if (state.boardUrl) {
+                if (state.boardUrl.startsWith('http')) {
+                    boardLink = `<a href="${state.boardUrl}" target="_blank" rel="noopener noreferrer" class="board-link">${state.boardName} →</a>`;
+                } else {
+                    // It's a phone number
+                    boardLink = `<span style="color: #464646;">${state.boardUrl}</span>`;
+                }
+            } else {
+                boardLink = '<span class="no-board">Not Available</span>';
+            }
+            
+            // CE requirements page link or phone
+            let ceLink;
+            if (state.ceUrl) {
+                if (state.ceUrl.startsWith('http')) {
+                    ceLink = `<a href="${state.ceUrl}" target="_blank" rel="noopener noreferrer" class="board-link">CE Requirements →</a>`;
+                } else {
+                    // It's a phone number
+                    ceLink = `<span style="color: #464646;">${state.ceUrl}</span>`;
+                }
+            } else {
+                ceLink = '<span class="no-board">N/A</span>';
+            }
+            
+            tableBody.innerHTML = `
+                <tr>
+                    <td>${state.state}</td>
+                    <td>${state.ncbtmbFsmtb}</td>
+                    <td>${state.totalCE}</td>
+                    <td>${state.maxOnline}</td>
+                    <td>${state.notes}</td>
+                    <td>${boardLink}</td>
+                    <td>${ceLink}</td>
+                </tr>
+            `;
+        }
+        
+        // Search and filter - no auto-selection
+        function filterStates(searchTerm) {
+            if (!searchTerm) {
+                dropdown.classList.remove('visible');
+                return;
+            }
+            
+            // Normalize search term for special cases
+            let normalizedTerm = searchTerm.toLowerCase();
+            
+            // Special handling: "us" should match "U.S. Virgin Islands"
+            if (normalizedTerm === 'us' || normalizedTerm === 'u.s.' || normalizedTerm === 'u.s') {
+                normalizedTerm = 'u.s. virgin islands';
+            }
+            
+            // Filter states by search term
+            const filtered = stateData.filter(state => 
+                state.state.toLowerCase().includes(normalizedTerm)
+            );
+            
+            // Also check for abbreviation match
+            const term = searchTerm.trim().toUpperCase();
+            if (term.length === 2 && stateAbbreviations[term]) {
+                const fullStateName = stateAbbreviations[term];
+                const abbrevState = stateData.find(s => s.state === fullStateName);
+                if (abbrevState && !filtered.includes(abbrevState)) {
+                    filtered.unshift(abbrevState); // Add to top of list
+                }
+            }
+            
+            // Update dropdown
+            dropdown.innerHTML = '';
+            if (filtered.length > 0) {
+                filtered.forEach(state => {
+                    const item = document.createElement('div');
+                    item.className = 'dropdown-item';
+                    item.textContent = state.state;
+                    item.onclick = () => selectState(state.state);
+                    dropdown.appendChild(item);
+                });
+                dropdown.classList.add('visible');
+            } else {
+                dropdown.classList.remove('visible');
+            }
+        }
+        
+        // Select state
+        function selectState(stateName) {
+            searchInput.value = stateName;
+            dropdown.classList.remove('visible');
+            selectedState = stateData.find(s => s.state === stateName);
+            renderState(selectedState);
+        }
+        
+        // Clear search
+        function clearSearch() {
+            searchInput.value = '';
+            clearBtn.classList.remove('visible');
+            selectedState = null;
+            renderState(null);
+            dropdown.classList.remove('visible');
+        }
+        
+        // Event listeners
+        searchInput.addEventListener('input', (e) => {
+            const value = e.target.value;
+            if (value) {
+                clearBtn.classList.add('visible');
+            } else {
+                clearBtn.classList.remove('visible');
+                renderState(null);
+            }
+            filterStates(value);
+        });
+        
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value) {
+                filterStates(searchInput.value);
+            }
+        });
+        
+        clearBtn.addEventListener('click', clearSearch);
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                dropdown.classList.remove('visible');
+            }
+        });
+        
+        // Initialize - show message
+        noResults.style.display = 'block';
+    </script>
+</body>
+</html>
